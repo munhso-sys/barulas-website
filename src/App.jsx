@@ -246,6 +246,9 @@ export default function BarulasWebsiteHome() {
           </div>
         </section>
 
+        <SmartMineMap />
+        <AIPredictiveCenter />
+
         <section id="solutions" className="px-4 py-20 lg:px-8">
           <SectionHeading title={t.solutionTitle} text={t.solutionText} />
           <div className="mx-auto mt-10 grid max-w-7xl gap-5 md:grid-cols-2 lg:grid-cols-3">
@@ -511,5 +514,262 @@ function ContactRow({ icon: Icon, text }) {
         </div>
       </div>
     </div>
+  );
+}
+
+function SmartMineMap() {
+  const nodes = [
+    ["Pit Zone", "ACTIVE", "18 trucks", "top-[18%] left-[18%]"],
+    ["Crusher", "WARNING", "82% load", "top-[32%] left-[56%]"],
+    ["Fuel Station", "NORMAL", "12.4 L/t", "top-[58%] left-[28%]"],
+    ["Maintenance", "ACTIVE", "96% health", "top-[62%] left-[72%]"],
+  ];
+
+  const statusColor = {
+    ACTIVE: "border-emerald-400 bg-emerald-400/20 text-emerald-300",
+    NORMAL: "border-cyan-400 bg-cyan-400/20 text-cyan-300",
+    WARNING: "border-yellow-400 bg-yellow-400/20 text-yellow-300",
+  };
+
+  return (
+    <section id="operations-map" className="px-4 py-20 lg:px-8">
+      <SectionHeading
+        title="Smart Mine Operations Map"
+        text="Real-time haul routes, equipment zones, IoT sensor nodes and operational alerts for intelligent mining command center visibility."
+      />
+
+      <div className="mx-auto mt-12 grid max-w-7xl gap-6 lg:grid-cols-[1.2fr_.8fr]">
+        <div className="relative min-h-[500px] overflow-hidden rounded-[2rem] border border-cyan-400/20 bg-slate-950 p-6 shadow-2xl shadow-cyan-950/30">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(34,211,238,.18),transparent_30%),radial-gradient(circle_at_80%_60%,rgba(249,115,22,.14),transparent_30%)]" />
+
+          <svg className="absolute inset-0 h-full w-full opacity-60">
+            <line x1="18%" y1="18%" x2="56%" y2="32%" stroke="rgb(34 211 238)" strokeWidth="2" strokeDasharray="8 8" />
+            <line x1="56%" y1="32%" x2="72%" y2="62%" stroke="rgb(249 115 22)" strokeWidth="2" strokeDasharray="8 8" />
+            <line x1="18%" y1="18%" x2="28%" y2="58%" stroke="rgb(34 211 238)" strokeWidth="2" strokeDasharray="8 8" />
+            <line x1="28%" y1="58%" x2="72%" y2="62%" stroke="rgb(34 211 238)" strokeWidth="2" strokeDasharray="8 8" />
+          </svg>
+
+          <div className="relative z-10 mb-6 flex items-center justify-between">
+            <div>
+              <div className="text-sm uppercase tracking-widest text-cyan-300">
+                AI-powered mine control layer
+              </div>
+              <h3 className="mt-2 text-2xl font-black">
+                Operational Site View
+              </h3>
+            </div>
+
+            <span className="rounded-full bg-emerald-400/10 px-4 py-2 text-xs font-black text-emerald-300">
+              LIVE MAP
+            </span>
+          </div>
+
+          {nodes.map(([name, status, value, position]) => (
+            <div key={name} className={`absolute z-20 ${position}`}>
+              <div className="relative">
+                <span className="absolute inset-0 animate-ping rounded-full bg-cyan-400/30" />
+                <div className={`relative h-5 w-5 rounded-full border-2 ${statusColor[status]}`} />
+              </div>
+
+              <div className="mt-3 min-w-[150px] rounded-2xl border border-white/10 bg-slate-900/90 p-3 backdrop-blur">
+                <div className="text-sm font-bold">{name}</div>
+                <div className="mt-1 text-xs text-slate-400">{value}</div>
+                <div className={`mt-2 inline-flex rounded-full border px-2 py-1 text-[10px] font-black ${statusColor[status]}`}>
+                  {status}
+                </div>
+              </div>
+            </div>
+          ))}
+
+          <div className="absolute bottom-6 left-6 right-6 z-10 grid gap-3 sm:grid-cols-3">
+            {["Haul Route", "IoT Sensors", "AI Alerts"].map((item) => (
+              <div
+                key={item}
+                className="rounded-xl border border-white/10 bg-slate-950/80 p-3 text-sm text-slate-300 backdrop-blur"
+              >
+                {item}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-6">
+          <div className="text-sm text-slate-400">Live Analytics</div>
+          <h3 className="mt-1 text-2xl font-black">Mine Control Signals</h3>
+
+          <div className="mt-6 space-y-4">
+            {[
+              ["Truck Cycle Time", "18.6 min", "92%"],
+              ["Crusher Throughput", "1,240 t/h", "82%"],
+              ["Fuel Efficiency", "12.4 L/t", "74%"],
+              ["Equipment Health", "96%", "96%"],
+              ["AI Risk Index", "Low-Medium", "58%"],
+            ].map(([label, value, width]) => (
+              <div key={label} className="rounded-2xl border border-white/10 bg-slate-950/70 p-4">
+                <div className="flex items-center justify-between">
+                  <div className="text-sm text-slate-400">{label}</div>
+                  <div className="font-bold text-white">{value}</div>
+                </div>
+                <div className="mt-3 h-2 rounded-full bg-slate-800">
+                  <div className="h-2 rounded-full bg-cyan-400" style={{ width }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function AIPredictiveCenter() {
+  const aiCards = [
+    [
+      "Ore Grade Prediction",
+      "92.4%",
+      "AI geological confidence",
+    ],
+    [
+      "Equipment Failure Risk",
+      "LOW",
+      "Next 72h prediction",
+    ],
+    [
+      "Autonomous Fleet Efficiency",
+      "+18%",
+      "Optimized haul cycle",
+    ],
+    [
+      "CO₂ Reduction",
+      "-12%",
+      "ESG sustainability target",
+    ],
+  ];
+
+  const insights = [
+    "AI detected crusher overload trend in next 4h",
+    "Fleet optimization can reduce idle time by 11%",
+    "Predictive maintenance recommended for Truck #204",
+    "Drilling efficiency increased after route adjustment",
+  ];
+
+  return (
+    <section id="ai-center" className="px-4 py-20 lg:px-8">
+      <SectionHeading
+        title="AI Predictive Analytics Center"
+        text="Artificial intelligence driven forecasting, optimization and operational intelligence for smart mining transformation."
+      />
+
+      <div className="mx-auto mt-12 grid max-w-7xl gap-6 lg:grid-cols-[1fr_.8fr]">
+        <div className="rounded-[2rem] border border-cyan-400/20 bg-slate-950 p-6 shadow-2xl shadow-cyan-950/30">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-sm uppercase tracking-widest text-cyan-300">
+                AI Operations Brain
+              </div>
+              <h3 className="mt-2 text-3xl font-black">
+                Predictive Intelligence
+              </h3>
+            </div>
+
+            <div className="rounded-full bg-cyan-400/10 px-4 py-2 text-xs font-black text-cyan-300">
+              AI ACTIVE
+            </div>
+          </div>
+
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            {aiCards.map(([title, value, desc]) => (
+              <div
+                key={title}
+                className="rounded-2xl border border-white/10 bg-white/[0.04] p-5"
+              >
+                <div className="text-sm text-slate-400">
+                  {title}
+                </div>
+
+                <div className="mt-3 text-4xl font-black text-cyan-300">
+                  {value}
+                </div>
+
+                <div className="mt-2 text-sm text-slate-300">
+                  {desc}
+                </div>
+
+                <div className="mt-5 h-2 rounded-full bg-slate-800">
+                  <div
+                    className="h-2 rounded-full bg-cyan-400"
+                    style={{
+                      width:
+                        value === "LOW"
+                          ? "24%"
+                          : value === "+18%"
+                          ? "78%"
+                          : "88%",
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 rounded-2xl border border-orange-400/20 bg-orange-400/10 p-5">
+            <div className="mb-3 flex items-center gap-2 text-orange-300">
+              <BrainCircuit size={18} />
+              Live AI Insight Feed
+            </div>
+
+            <div className="space-y-3">
+              {insights.map((item) => (
+                <div
+                  key={item}
+                  className="rounded-xl border border-white/10 bg-slate-950/60 p-3 text-sm text-slate-300"
+                >
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-6">
+          <div className="text-sm text-slate-400">
+            Production Forecast
+          </div>
+
+          <h3 className="mt-2 text-2xl font-black">
+            AI Forecast Engine
+          </h3>
+
+          <div className="mt-8 flex h-[320px] items-end justify-between gap-3">
+            {[48, 72, 66, 84, 58, 91, 76].map((h, i) => (
+              <div
+                key={i}
+                className="flex flex-1 flex-col items-center"
+              >
+                <div
+                  className="w-full rounded-t-2xl bg-gradient-to-t from-cyan-500 to-cyan-300"
+                  style={{ height: `${h * 2.4}px` }}
+                />
+
+                <div className="mt-3 text-xs text-slate-400">
+                  W{i + 1}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-4">
+            <div className="text-sm text-emerald-300">
+              AI Recommendation
+            </div>
+
+            <div className="mt-2 text-sm text-slate-200">
+              Increase night-shift crusher throughput by 8% to
+              achieve projected production target.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
