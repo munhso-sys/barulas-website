@@ -216,33 +216,13 @@ export default function BarulasWebsiteHome() {
               </div>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }} className="relative">
-              <div className="rounded-[2rem] border border-cyan-300/20 bg-slate-900/70 p-4 shadow-2xl shadow-cyan-950/40">
-                <div className="rounded-[1.5rem] bg-slate-950 p-5">
-                  <div className="mb-5 flex items-center justify-between">
-                    <div>
-                      <div className="text-sm text-slate-400">Operational Dashboard</div>
-                      <div className="text-2xl font-bold">Smart Mining Intelligence</div>
-                    </div>
-                    <Radio className="text-cyan-300" />
-                  </div>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    {["Production", "Utilization", "Safety", "Reliability"].map((item, i) => (
-                      <div key={item} className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-                        <div className="text-sm text-slate-400">{item}</div>
-                        <div className="mt-2 text-3xl font-black text-cyan-300">{["94%", "87%", "1.2", "98%"][i]}</div>
-                        <div className="mt-4 h-2 rounded-full bg-slate-800"><div className="h-2 rounded-full bg-cyan-400" style={{ width: ["94%", "87%", "62%", "98%"][i] }} /></div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-4 rounded-2xl border border-orange-400/20 bg-orange-400/10 p-4">
-                    <div className="mb-3 flex items-center gap-2 text-orange-300"><Database size={18} /> Integrated Data Flow</div>
-                    <div className="flex flex-wrap gap-2 text-xs text-slate-300">
-                      {['ERP', 'CMMS', 'BI', 'IoT', 'Fleet', 'AI'].map((x) => <span key={x} className="rounded-full bg-slate-900 px-3 py-1">{x}</span>)}
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+              className="relative"
+            >
+              <DashboardPanel />
             </motion.div>
           </div>
         </section>
@@ -377,6 +357,159 @@ function ContactRow({ icon: Icon, text }) {
     <div className="mb-4 flex items-center gap-3 text-slate-300">
       <Icon size={20} className="text-cyan-300" />
       <span>{text}</span>
+    </div>
+  );
+ }  
+  function DashboardPanel() {
+  const [active, setActive] = useState("Production");
+
+  const metrics = [
+    {
+      name: "Production",
+      value: "94%",
+      detail: "Daily target achievement",
+      width: "94%",
+    },
+    {
+      name: "Utilization",
+      value: "87%",
+      detail: "Equipment active usage",
+      width: "87%",
+    },
+    {
+      name: "Safety",
+      value: "1.2",
+      detail: "Risk index today",
+      width: "62%",
+    },
+    {
+      name: "Reliability",
+      value: "98%",
+      detail: "System availability",
+      width: "98%",
+    },
+  ];
+
+  const operations = [
+    ["Truck Fleet", "ACTIVE", "18 / 21 units"],
+    ["Crusher Load", "WARNING", "82% load"],
+    ["Fuel Usage", "NORMAL", "12.4 L/t"],
+    ["Equipment Health", "ACTIVE", "96% healthy"],
+    ["AI Prediction", "WARNING", "Maintenance in 36h"],
+    ["Live Alerts", "CRITICAL", "1 safety alert"],
+  ];
+
+  const selected = metrics.find((m) => m.name === active);
+
+  const statusStyle = {
+    ACTIVE: "bg-emerald-400/10 text-emerald-300 border-emerald-400/30",
+    NORMAL: "bg-cyan-400/10 text-cyan-300 border-cyan-400/30",
+    WARNING: "bg-yellow-400/10 text-yellow-300 border-yellow-400/30",
+    CRITICAL: "bg-red-400/10 text-red-300 border-red-400/30",
+  };
+
+  return (
+    <div className="rounded-[2rem] border border-cyan-300/20 bg-slate-900/70 p-4 shadow-2xl shadow-cyan-950/40">
+      <div className="rounded-[1.5rem] bg-slate-950 p-5">
+        <div className="mb-5 flex items-center justify-between">
+          <div>
+            <div className="text-sm text-slate-400">
+              Interactive Operations Dashboard
+            </div>
+            <div className="text-2xl font-bold">
+              Smart Mining Intelligence
+            </div>
+          </div>
+          <Radio className="text-cyan-300 animate-pulse" />
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          {metrics.map((item) => (
+            <button
+              key={item.name}
+              onClick={() => setActive(item.name)}
+              className={`rounded-2xl border p-4 text-left transition-all ${
+                active === item.name
+                  ? "border-orange-400/60 bg-orange-400/10"
+                  : "border-white/10 bg-white/[0.04] hover:border-cyan-300/40"
+              }`}
+            >
+              <div className="text-sm text-slate-400">{item.name}</div>
+              <div className="mt-2 text-3xl font-black text-cyan-300">
+                {item.value}
+              </div>
+              <div className="mt-4 h-2 rounded-full bg-slate-800">
+                <div
+                  className="h-2 rounded-full bg-cyan-400"
+                  style={{ width: item.width }}
+                />
+              </div>
+            </button>
+          ))}
+        </div>
+
+        <div className="mt-5 rounded-2xl border border-cyan-400/20 bg-cyan-400/10 p-4">
+          <div className="text-sm text-slate-400">Selected KPI</div>
+          <div className="mt-1 text-xl font-bold text-white">
+            {selected.name}
+          </div>
+          <div className="mt-1 text-sm text-slate-300">
+            {selected.detail}
+          </div>
+        </div>
+
+        <div className="mt-5 rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+          <div className="mb-4 flex items-center justify-between">
+            <div>
+              <div className="text-sm text-slate-400">
+                Real-time Mining Operations Center
+              </div>
+              <div className="text-lg font-bold">
+                Live Operational Signals
+              </div>
+            </div>
+            <span className="rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-bold text-emerald-300">
+              LIVE
+            </span>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2">
+            {operations.map(([name, status, value]) => (
+              <div
+                key={name}
+                className="rounded-xl border border-white/10 bg-slate-950/70 p-3"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <div className="text-sm font-semibold text-white">
+                    {name}
+                  </div>
+                  <span
+                    className={`rounded-full border px-2 py-1 text-[10px] font-black ${
+                      statusStyle[status]
+                    }`}
+                  >
+                    {status}
+                  </span>
+                </div>
+                <div className="mt-2 text-sm text-slate-400">{value}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-4 rounded-2xl border border-orange-400/20 bg-orange-400/10 p-4">
+          <div className="mb-3 flex items-center gap-2 text-orange-300">
+            <Database size={18} /> Integrated Data Flow
+          </div>
+          <div className="flex flex-wrap gap-2 text-xs text-slate-300">
+            {["ERP", "CMMS", "BI", "IoT", "Fleet", "AI"].map((x) => (
+              <span key={x} className="rounded-full bg-slate-900 px-3 py-1">
+                {x}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
