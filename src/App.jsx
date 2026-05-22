@@ -53,7 +53,7 @@ const copy = {
       ["AI + Operational Intelligence", "Predictive maintenance, risk monitoring, decision support system."],
       ["Research & Strategic Consulting", "Maturity assessment, roadmap, collaboration ecosystem design."],
     ],
-    architectureTitle: "Mine-to-Mill Smart Mining Architecture",
+    architectureTitle: "Smart Mining Architecture",
     architectureText: "Үйл ажиллагааны өгөгдлийг нэгтгэж, AI analytics болон decision intelligence-ээр дамжуулан performance optimization хийх 7 давхар архитектур.",
     layers: [
       "Mining operations layer",
