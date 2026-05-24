@@ -1,3 +1,4 @@
+import ResearchPage from "./ResearchPage";
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -127,9 +128,16 @@ const copy = {
 const icons = [Cpu, BarChart3, Network, Activity, BrainCircuit, ShieldCheck];
 
 export default function BarulasWebsiteHome() {
+  const [page, setPage] = useState("home");
   const [lang, setLang] = useState("mn");
   const [open, setOpen] = useState(false);
+
   const t = useMemo(() => copy[lang], [lang]);
+
+  if (page === "research") {
+    return <ResearchPage onBack={() => setPage("home")} />;
+  }
+
 
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -199,7 +207,7 @@ export default function BarulasWebsiteHome() {
               </h1>
               <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">{t.heroText}</p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <button onClick={() => scrollTo("solutions")} className="inline-flex items-center justify-center gap-2 rounded-full bg-orange-500 px-6 py-3 font-semibold text-slate-950 hover:bg-orange-400">
+                <button onClick={() => setPage("research")} className="inline-flex items-center justify-center gap-2 rounded-full bg-orange-500 px-6 py-3 font-semibold text-slate-950 hover:bg-orange-400">
                   {t.heroPrimary} <ArrowRight size={18} />
                 </button>
                 <button onClick={() => scrollTo("roadmap")} className="rounded-full border border-white/15 px-6 py-3 font-semibold text-white hover:bg-white/10">
