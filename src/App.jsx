@@ -153,7 +153,7 @@ export default function BarulasWebsiteHome() {
           <button onClick={() => scrollTo("home")} className="flex items-center gap-3">
             
             <img
-              src="/BM.jpg"
+              src="/BM.gif"
               alt="Barulas Mining LLC"
               className="h-12 w-12 rounded-xl object-cover"
             />
